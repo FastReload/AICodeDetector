@@ -6,7 +6,7 @@ import tempfile
 from gemini import set_gemini_api_key, generate_bulk_gemini_codes
 from chatgpt import set_chatgpt_api_key, generate_chatgpt_cpp_code
 
-st.set_page_config(page_title="AI Code Detector", layout="centered")
+st.set_page_config(page_title="AI Code Detector", layout="wide")
 st.title("AI Code Detector")
 
 tabs = st.tabs([
