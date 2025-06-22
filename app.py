@@ -7,6 +7,66 @@ from gemini import set_gemini_api_key, generate_bulk_gemini_codes
 from chatgpt import set_chatgpt_api_key, generate_chatgpt_cpp_code
 
 st.set_page_config(page_title="AI Code Detector", layout="wide")
+
+st.markdown("""
+    <style>
+        html, body, .stApp {
+            background-color: white !important;
+            color: black !important;
+        }
+
+        h1, h2, h3, h4, h5, h6, p, span, div, label, li, th, td {
+            color: black !important;
+        }
+
+        .stTextInput>div>div>input,
+        .stTextArea>div>textarea,
+        .stSelectbox>div>div>div,
+        .stRadio>div>div>label,
+        .stNumberInput>div>div>input,
+        .stMultiSelect>div>div>div {
+            background-color: white !important;
+            color: black !important;
+        }
+
+        .stButton > button {
+            background-color: white !important;
+            color: black !important;
+            border: 1px solid black !important;
+            font-weight: bold;
+        }
+
+        div[data-baseweb="tab"] {
+            background-color: white !important;
+            color: black !important;
+        }
+
+        div[data-baseweb="tab"][aria-selected="true"] {
+            background-color: #f5f5f5 !important;
+            font-weight: bold;
+            color: black !important;
+        }
+
+        pre, pre > code {
+            background-color: black !important;
+            color: white !important;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: "Courier New", monospace;
+            overflow-x: auto;
+        }
+
+        pre * {
+            color: white !important;
+        }
+
+        code:not(pre > code) {
+            background-color: transparent !important;
+            color: black !important;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 st.title("AI Code Detector")
 
 tabs = st.tabs([
