@@ -131,9 +131,7 @@ with tabs[0]:
     #### 6️⃣ Generate AI Code (ChatGPT)
     - Use OpenAI's GPT to generate code in a single-prompt interface.
 
-    ---
-    💡 _Need help? Open an issue or contribute on GitHub at [https://github.com/FastReload/AICodeDetector](https://github.com/FastReload/AICodeDetector)._
-    """)
+
 
 # ------------------- Tab 1: Upload & Run -------------------
 with tabs[1]:
