@@ -70,13 +70,13 @@ st.markdown("""
 st.title("AI Code Detector")
 
 tabs = st.tabs([
-    "\U0001F4D6 Introduction",
-    "\U0001F4C1 Upload & Run",
-    "\U0001F4CA Compare All Models",
-    "\U0001F9EA Try a Code Snippet",
-    "\U0001F4D1 Bulk Generate (Gemini)",
-    "\U0001F4D1 Bulk Generate (ChatGPT)",
-    "\U0001F91D Merge JSONL Files"
+    "Introduction",
+    "Upload & Run",
+    "Compare All Models",
+    "Try a Code Snippet",
+    "Bulk Generate (Gemini)",
+    "Bulk Generate (ChatGPT)",
+    "Merge JSONL Files"
 ])
 
 # ------------------- Tab 0: Introduction -------------------
@@ -87,7 +87,7 @@ with tabs[0]:
     This application helps you detect whether a given code snippet is **Human-Written** or **AI-Generated**.  
     It uses advanced machine learning models trained on custom features like **TF-IDF** (via `SCTokenizer`) and **CodeBERT embeddings**.
 
-    ### 🚀 How to Use This App
+    ###How to Use This App
 
     #### 1️⃣ Upload Your Data
     - Go to the **Upload & Run** tab.
@@ -193,7 +193,7 @@ with tabs[1]:
 # ------------------- Tab 2: Compare All Models -------------------
 with tabs[2]:
     if "models" in st.session_state:
-        st.subheader("\U0001F4CA Model Comparison Table")
+        st.subheader("Model Comparison Table")
 
         tfidf_models = {k: v for k, v in st.session_state["models"].items() if k.startswith("TFIDF")}
         codebert_models = {k: v for k, v in st.session_state["models"].items() if k.startswith("CodeBERT")}
@@ -213,7 +213,7 @@ with tabs[2]:
 
 # ------------------- Tab 3: Try a Code Snippet -------------------
 with tabs[3]:
-    st.subheader("\U0001F9EA Try a Code Snippet")
+    st.subheader("Try a Code Snippet")
 
     if "cpp_models" in st.session_state and "cpp_vectorizer" in st.session_state:
         tokenizer_choice = st.radio("Select Tokenizer", ["CppTokenizer (TF-IDF based)", "CodeBERT (semantic embedding)"])
@@ -263,7 +263,7 @@ with tabs[3]:
 
 # ------------------- Tab 4: Bulk Generate (Gemini) -------------------
 with tabs[4]:
-    st.subheader("🗂 Bulk Generate Code with Gemini")
+    st.subheader("Bulk Generate Code with Gemini")
 
     st.markdown("""
    
@@ -330,7 +330,7 @@ with tabs[4]:
 
 # ------------------- Tab 5: Bulk Generate (ChatGPT) -------------------
 with tabs[5]:
-    st.subheader("🗂 Bulk Generate Code with ChatGPT")
+    st.subheader("Bulk Generate Code with ChatGPT")
 
     st.markdown("""
     Use this tab to generate a large dataset of AI-generated code.
@@ -396,7 +396,7 @@ with tabs[5]:
 
 # ------------------- Tab 6: Merge JSONL Files -------------------
 with tabs[6]:
-    st.subheader("🔀 Merge Multiple JSONL Files")
+    st.subheader("Merge Multiple JSONL Files")
 
     st.markdown("""
     Use this tab to combine multiple `.jsonl` files into one.
