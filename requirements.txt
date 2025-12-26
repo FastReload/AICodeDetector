@@ -1,0 +1,15 @@
+streamlit
+pandas
+numpy
+
+google-generativeai
+openai
+
+scikit-learn
+sctokenizer
+transformers
+torch
+xgboost
+lime
+captum
+reportlab
