@@ -3,11 +3,13 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from transformers import RobertaTokenizer, RobertaModel
 from sklearn.model_selection import train_test_split
 import torch
+import os
 import numpy as np
 
+HF_TOKEN = os.environ.get("HF_TOKEN")
 # Load CodeBERT once
-codebert_tokenizer = RobertaTokenizer.from_pretrained("microsoft/codebert-base")
-codebert_model = RobertaModel.from_pretrained("microsoft/codebert-base")
+codebert_tokenizer = RobertaTokenizer.from_pretrained("microsoft/codebert-base", token=HF_TOKEN)
+codebert_model = RobertaModel.from_pretrained("microsoft/codebert-base", token=HF_TOKEN)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 codebert_model.to(device)
 codebert_model.eval()
