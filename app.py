@@ -7,16 +7,257 @@ from gemini import set_gemini_api_key, generate_bulk_gemini_codes
 from chatgpt import set_chatgpt_api_key, generate_chatgpt_cpp_code
 
 st.set_page_config(page_title="AI Code Detector", layout="centered")
+
+# Light theme styling with white background
+st.markdown("""
+<style>
+    /* Main background - WHITE */
+    .stApp {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+    
+    /* Text elements - BLACK */
+    .stMarkdown, .stMarkdown p, .stMarkdown li, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4 {
+        color: #000000 !important;
+    }
+    
+    /* Code blocks - Dark with light text */
+    code {
+        background-color: #1e1e1e !important;
+        color: #00ff00 !important;
+        border: 1px solid #333333 !important;
+        padding: 2px 6px !important;
+        border-radius: 3px !important;
+    }
+    
+    pre {
+        background-color: #0d1117 !important;
+        color: #c9d1d9 !important;
+        border: 1px solid #333333 !important;
+        padding: 16px !important;
+        border-radius: 6px !important;
+    }
+    
+    pre code {
+        background-color: transparent !important;
+        border: none !important;
+    }
+    
+    /* Text input and text area */
+    .stTextInput > div > div > input, .stTextArea > div > div > textarea {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        border: 2px solid #0969da !important;
+        font-size: 14px !important;
+    }
+    
+    .stTextArea > div > div > textarea {
+        min-height: 150px !important;
+    }
+    
+    /* File uploader */
+    .stFileUploader {
+        background-color: #ffffff !important;
+        border: 2px solid #0969da !important;
+        padding: 20px !important;
+    }
+    
+    .stFileUploader label {
+        color: #000000 !important;
+        font-weight: 600 !important;
+    }
+    
+    /* Buttons */
+    .stButton > button {
+        background-color: #0969da !important;
+        color: #ffffff !important;
+        border: 1px solid #0969da !important;
+    }
+    
+    .stButton > button:hover {
+        background-color: #0860ca !important;
+        border-color: #0860ca !important;
+    }
+    
+    /* Download button */
+    .stDownloadButton > button {
+        background-color: #1a7f37 !important;
+        color: #ffffff !important;
+        border: 1px solid #1a7f37 !important;
+    }
+    
+    .stDownloadButton > button:hover {
+        background-color: #1a7f37dd !important;
+    }
+    
+    /* Dataframes */
+    .stDataFrame {
+        background-color: #ffffff !important;
+    }
+    
+    .stDataFrame table {
+        color: #000000 !important;
+        background-color: #ffffff !important;
+    }
+    
+    .stDataFrame th {
+        background-color: #f6f8fa !important;
+        color: #000000 !important;
+        font-weight: 600 !important;
+        border: 1px solid #d0d7de !important;
+    }
+    
+    .stDataFrame td {
+        color: #000000 !important;
+        background-color: #ffffff !important;
+        border: 1px solid #d0d7de !important;
+    }
+    
+    .stDataFrame tbody tr:hover {
+        background-color: #f6f8fa !important;
+    }
+    
+    /* Tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        background-color: #f6f8fa !important;
+        border-bottom: 1px solid #d0d7de !important;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        color: #57606a !important;
+        background-color: transparent !important;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        color: #000000 !important;
+        background-color: #ffffff !important;
+        border-bottom: 2px solid #0969da !important;
+    }
+    
+    /* Select box / Radio */
+    .stSelectbox label, .stRadio label {
+        color: #000000 !important;
+        font-weight: 600 !important;
+    }
+    
+    .stSelectbox > div > div, .stRadio > div {
+        color: #000000 !important;
+    }
+    
+    .stRadio > div > label > div {
+        color: #000000 !important;
+    }
+    
+    .stRadio > div > label > div > div {
+        color: #000000 !important;
+    }
+    
+    .stRadio label span {
+        color: #000000 !important;
+    }
+    
+    /* Selectbox options */
+    .stSelectbox div[data-baseweb="select"] > div {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        border: 2px solid #0969da !important;
+    }
+    
+    .stSelectbox option {
+        color: #000000 !important;
+        background-color: #ffffff !important;
+    }
+    
+    /* Info, Warning, Success, Error boxes */
+    .stAlert {
+        color: #000000 !important;
+        background-color: #ffffff !important;
+        border: 2px solid #0969da !important;
+        border-radius: 6px !important;
+        padding: 16px !important;
+    }
+    
+    .stAlert p, .stAlert div, .stAlert span {
+        color: #000000 !important;
+        font-weight: 500 !important;
+    }
+    
+    /* Warning specifically */
+    div[data-baseweb="notification"][kind="warning"] {
+        background-color: #fff8dc !important;
+        border-color: #f0ad4e !important;
+    }
+    
+    /* Success specifically */
+    div[data-baseweb="notification"][kind="success"] {
+        background-color: #d4edda !important;
+        border-color: #28a745 !important;
+    }
+    
+    /* Error specifically */
+    div[data-baseweb="notification"][kind="error"] {
+        background-color: #f8d7da !important;
+        border-color: #dc3545 !important;
+    }
+    
+    /* Info specifically */
+    div[data-baseweb="notification"][kind="info"] {
+        background-color: #d1ecf1 !important;
+        border-color: #17a2b8 !important;
+    }
+    
+    /* Progress bar */
+    .stProgress > div > div > div {
+        background-color: #0969da !important;
+    }
+    
+    /* Sidebar */
+    section[data-testid="stSidebar"] {
+        background-color: #f6f8fa !important;
+    }
+    
+    section[data-testid="stSidebar"] * {
+        color: #000000 !important;
+    }
+    
+    /* Headers */
+    h1, h2, h3, h4, h5, h6 {
+        color: #000000 !important;
+    }
+    
+    /* Links */
+    a {
+        color: #0969da !important;
+    }
+    
+    a:hover {
+        color: #0860ca !important;
+        text-decoration: underline !important;
+    }
+    
+    /* Labels */
+    label {
+        color: #000000 !important;
+    }
+    
+    /* Dividers */
+    hr {
+        border-color: #d0d7de !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 st.title("AI Code Detector")
 
 tabs = st.tabs([
-    "\U0001F4D6 Introduction",
-    "\U0001F4C1 Upload & Run",
-    "\U0001F4CA Compare All Models",
-    "\U0001F9EA Try a Code Snippet",
-    "\U0001F4D1 Bulk Generate (Gemini)",
-    "\U0001F4D1 Bulk Generate (ChatGPT)",
-    "\U0001F91D Merge JSONL Files"
+    "Introduction",
+    "Upload & Run",
+    "Compare All Models",
+    "Try a Code Snippet",
+    "Bulk Generate (Gemini)",
+    "Bulk Generate (ChatGPT)",
+    "Merge JSONL Files"
 ])
 
 # ------------------- Tab 0: Introduction -------------------
@@ -27,9 +268,9 @@ with tabs[0]:
     This application helps you detect whether a given code snippet is **Human-Written** or **AI-Generated**.  
     It uses advanced machine learning models trained on custom features like **TF-IDF** (via `SCTokenizer`) and **CodeBERT embeddings**.
 
-    ### 🚀 How to Use This App
+    ### How to Use This App
 
-    #### 1️⃣ Upload Your Data
+    #### 1. Upload Your Data
     - Go to the **Upload & Run** tab.
     - Upload **two `.jsonl` files**:
         - One with human-written code samples (label `0`)
@@ -46,33 +287,33 @@ with tabs[0]:
     }
     ```
 
-    #### 2️⃣ Train the Models
+    #### 2. Train the Models
     - Click the **Run Models (TF-IDF + CodeBERT)** button.
     - The app trains:
         - **TF-IDF models**: Random Forest, SVM, XGBoost, MLP, and an Ensemble
         - **CodeBERT models**: Same set of models using semantic embeddings
 
-    #### 3️⃣ View and Compare Model Metrics
+    #### 3. View and Compare Model Metrics
     - Switch to the **Compare All Models** tab.
     - See accuracy, precision, recall, and F1-score for each model.
 
-    #### 4️⃣ Classify New Code Snippets
+    #### 4. Classify New Code Snippets
     - Go to the **Try a Code Snippet** tab.
     - Paste any code snippet.
     - Choose your tokenizer (TF-IDF or CodeBERT) and model.
     - Get instant predictions on whether the code is human-written or AI-generated!
 
-    #### 5️⃣ Generate AI Code in Bulk
+    #### 5. Generate AI Code in Bulk
     - Use the **Bulk Generate (Gemini)** tab.
     - Paste prompts and instruction styles using `|` separators.
     - Automatically generate multiple versions of each prompt using Gemini.
     - Download the full dataset for training or analysis.
 
-    #### 6️⃣ Generate AI Code (ChatGPT)
+    #### 6. Generate AI Code (ChatGPT)
     - Use OpenAI's GPT to generate code in a single-prompt interface.
 
     ---
-    💡 _Need help? Open an issue or contribute on GitHub at [https://github.com/FastReload/AICodeDetector](https://github.com/FastReload/AICodeDetector)._
+    _Need help? Open an issue or contribute on GitHub at [https://github.com/FastReload/AICodeDetector](https://github.com/FastReload/AICodeDetector)._
     """)
 
 # ------------------- Tab 1: Upload & Run -------------------
@@ -135,7 +376,7 @@ with tabs[1]:
 # ------------------- Tab 2: Compare All Models -------------------
 with tabs[2]:
     if "models" in st.session_state:
-        st.subheader("\U0001F4CA Model Comparison Table")
+        st.subheader("Model Comparison Table")
 
         tfidf_models = {k: v for k, v in st.session_state["models"].items() if k.startswith("TFIDF")}
         codebert_models = {k: v for k, v in st.session_state["models"].items() if k.startswith("CodeBERT")}
@@ -155,7 +396,7 @@ with tabs[2]:
 
 # ------------------- Tab 3: Try a Code Snippet -------------------
 with tabs[3]:
-    st.subheader("\U0001F9EA Try a Code Snippet")
+    st.subheader("Try a Code Snippet")
 
     if "cpp_models" in st.session_state and "cpp_vectorizer" in st.session_state:
         tokenizer_choice = st.radio("Select Tokenizer", ["CppTokenizer (TF-IDF based)", "CodeBERT (semantic embedding)"])
@@ -196,7 +437,7 @@ with tabs[3]:
 
                 if result is not None:
                     st.success(f"Prediction Result using {selected_model_name}")
-                    st.markdown("**Classification:** " + ("\U0001F9E0 AI-Generated" if result == 1 else "\U0001F464 Human-Written"))
+                    st.markdown("**Classification:** " + ("AI-Generated" if result == 1 else "Human-Written"))
 
             except Exception as e:
                 st.error(f"Error during prediction: {e}")
@@ -205,7 +446,7 @@ with tabs[3]:
 
 # ------------------- Tab 4: Bulk Generate (Gemini) -------------------
 with tabs[4]:
-    st.subheader("🗂 Bulk Generate Code with Gemini")
+    st.subheader("Bulk Generate Code with Gemini")
 
     st.markdown("""
    
@@ -272,7 +513,7 @@ with tabs[4]:
 
 # ------------------- Tab 5: Bulk Generate (ChatGPT) -------------------
 with tabs[5]:
-    st.subheader("🗂 Bulk Generate Code with ChatGPT")
+    st.subheader("Bulk Generate Code with ChatGPT")
 
     st.markdown("""
     Use this tab to generate a large dataset of AI-generated code.
@@ -338,7 +579,7 @@ with tabs[5]:
 
 # ------------------- Tab 6: Merge JSONL Files -------------------
 with tabs[6]:
-    st.subheader("🔀 Merge Multiple JSONL Files")
+    st.subheader("Merge Multiple JSONL Files")
 
     st.markdown("""
     Use this tab to combine multiple `.jsonl` files into one.
